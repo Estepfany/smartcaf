@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_pet_app/src/ui/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,10 +43,11 @@ class _LoginPageState extends State<LoginPage> {
 
     var jsonResponse = null;
     var responseString = "";
-    if (email == "correo" && pass == "123") {
+    if (email == "correo" && pass == "12345") {
       setState(() {
         _isLoading = false;
       });
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => HomePage()), (Route<dynamic> route) => false);
     }
 
     /*var response = await http.post("http://3.16.150.74:8080/mascotas-login/user", body: data);

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_pet_app/src/bloc/petHandler.dart';
+import 'package:my_pet_app/src/models/Pet.dart';
 
 class listaMascotas extends StatefulWidget {
   listaMascotas({Key key,this.title}): super(key: key);
@@ -12,11 +13,12 @@ class listaMascotas extends StatefulWidget {
 }
 
 class PageListMascotas extends State<listaMascotas> {
-  List data;
+  List data = new List();
   BusinessLogicComponent handler;
 
-  Future<void> initState() async {
-    data = await handler.recibir();
+  void initState()  {
+    data=[new Pet('Alpuchino', 'Ave', 'Loro', 'Verde', 5, '15', '200', true),
+          new Pet('Zeus', 'Perro', 'Mixto', 'Marrón', 10, '60', '20', true)] ;// await handler.recibir();
   }
 
   @override
@@ -47,12 +49,12 @@ class PageListMascotas extends State<listaMascotas> {
                           //   Text(data[i]['animal'], style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
                           Align(
                             alignment: Alignment.centerRight,
-                            child:Text(data[i]['animal'] ),
+                            child:Text(data[i].animal),
                           ),
-                          Text("Nombre: "+data[i]['nombre'],
+                          Text("Nombre: "+data[i].nombre,
                             style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
                           //   Text(data[i]['edad'].toString(), style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
-                          Text("Raza: "+data[i]['raza'], style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
+                          Text("Raza: "+data[i].raza, style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
                           //   Text(data[i]['peso'], style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
                           //   Text(data[i]['color'], style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
                           //  Text(data[i]['altura'], style: TextStyle(fontSize: 20,),textAlign: TextAlign.justify,),
