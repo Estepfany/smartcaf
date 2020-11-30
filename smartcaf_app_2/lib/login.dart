@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_pet_app/src/ui/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,40 +14,41 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.orange, Colors.black87],
+              colors: [Colors.blue, Colors.teal],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
         ),
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: <Widget>[
-                  headerSection(),
-                  textSection(),
-                  buttonSection(),
-                ],
-              ),
+        child: _isLoading ? Center(child: CircularProgressIndicator()) : ListView(
+          children: <Widget>[
+            headerSection(),
+            textSection(),
+            buttonSection(),
+          ],
+        ),
       ),
     );
   }
 
   signIn(String email, pass) async {
     SharedPreferences session = await SharedPreferences.getInstance();
-    Map data = {'user': email, 'password': pass};
+    Map data = {
+      'user': email,
+      'password': pass
+    };
 
     var jsonResponse = null;
     var responseString = "";
-    if (email == "correo" && pass == "123") {
+    if(email == "correo" && pass == "123"){
       setState(() {
         _isLoading = false;
       });
@@ -76,12 +82,12 @@ class _LoginPageState extends State<LoginPage> {
     }*/
   }
 
-  Future<String> checkToken(responseString) async {
-    var responseWord = http.read("http://3.16.150.74:8080/mascotas-login/hello",
-        headers: {"Authorization": responseString});
-    if (responseWord == null) return "";
+  Future<String> checkToken(responseString) async{
+    var responseWord = http.read("http://3.16.150.74:8080/mascotas-login/hello", headers: {"Authorization": responseString});
+    if(responseWord == null) return "";
     return responseWord;
   }
+
 
   Container buttonSection() {
     return Container(
@@ -90,14 +96,15 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       margin: EdgeInsets.only(top: 15.0),
       child: RaisedButton(
-        onPressed: emailController.text == "" || passwordController.text == ""? null: () {setState(() {
-                  _isLoading = true;
-                });
-                signIn(emailController.text, passwordController.text);
-              },
+        onPressed: emailController.text == "" || passwordController.text == "" ? null : () {
+          setState(() {
+            _isLoading = true;
+          });
+          signIn(emailController.text, passwordController.text);
+        },
         elevation: 0.0,
-        color: Colors.white70,
-        child: Text("Sign In", style: TextStyle(color: Colors.black87)),
+        color: Colors.purple,
+        child: Text("Sign In", style: TextStyle(color: Colors.white70)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
     );
@@ -114,12 +121,12 @@ class _LoginPageState extends State<LoginPage> {
           TextFormField(
             controller: emailController,
             cursorColor: Colors.white,
+
             style: TextStyle(color: Colors.white70),
             decoration: InputDecoration(
-              icon: Icon(Icons.supervised_user_circle, color: Colors.white70),
-              hintText: "Usuario",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
+              icon: Icon(Icons.email, color: Colors.white70),
+              hintText: "Email",
+              border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
               hintStyle: TextStyle(color: Colors.white70),
             ),
           ),
@@ -132,8 +139,7 @@ class _LoginPageState extends State<LoginPage> {
             decoration: InputDecoration(
               icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
+              border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
               hintStyle: TextStyle(color: Colors.white70),
             ),
           ),
@@ -146,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("SMARTCAF APP",
+      child: Text("Pet App",
           style: TextStyle(
               color: Colors.white70,
               fontSize: 40.0,
