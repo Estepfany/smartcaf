@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_pet_app/login.dart';
+import 'package:my_pet_app/src/ui/listaEmpleados.dart';
 import 'package:my_pet_app/src/ui/listaMascotas.dart';
+import 'package:my_pet_app/src/ui/listaClientes.dart';
+import 'package:my_pet_app/src/ui/listaNoticias.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -24,7 +27,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
-  final _screens = [listaMascotas(title: "Lista mascotas"),listaMascotas(title: "Lista mascotas")];
+  //final _screens = [listaMascotas(title: "Lista mascotas"),listaMascotas(title: "Lista mascotas")];
+  final _screens = [listaNoticias(title:"Noticias"),listaClientes(title: "Clientes"),listaEmpleados(title: "Empleados")];
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -54,17 +58,17 @@ class _HomePageState extends State<HomePage> {
         iconSize: 25,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              title: Text("Mascotas"),
+              icon: Icon(Icons.label),
+              title: Text("Noticas"),
               backgroundColor: Colors.blue),
            BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code),
-              title: Text("Otra"),
+              icon: Icon(Icons.person_pin),
+              title: Text("Cliente"),
               backgroundColor: Colors.blue),
-          /*BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code),
-              title: Text("Escaner Qr"),
-              backgroundColor: Colors.blue),*/
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assignment_ind),
+              title: Text("Empleados"),
+              backgroundColor: Colors.blue),
         ],
       ),
     );
